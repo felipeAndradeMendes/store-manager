@@ -8,7 +8,7 @@ const listSales = async () => {
 const listById = async (id) => {
   const result = await salesModel.listById(id);
 
-  if (!result) {
+  if (result.length === 0) {
     return { type: 'SALES_NOT_FOUD', message: 'Sale not found' };
   }
   return { type: null, message: result };
