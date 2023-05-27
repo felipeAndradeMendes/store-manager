@@ -26,15 +26,22 @@ const listById = async (req, res) => {
 };
 
 const createProduct = async (req, res) => {
-  // const data = {
-  //   name: 'ProdutoX',
-  // };
-
-  const data = req.body;
-  console.log('DATA:', req.body);
-  
-  const result = await productsService.createProduct(data);
-  res.status(200).json({ id: result, data });
+  try {
+  const newProduct = {
+    name: 'Produto1',
+  };
+    // const newProduct = req.body;
+    const productName = newProduct.name;    
+    // const data = req.body;
+    // console.log('DATA:', req.body);
+    
+    const result = await productsService.createProduct(newProduct);
+    res.status(201).json({ id: result, name: productName });
+    // res.status(200).json(data);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error.message);
+  }
 };
 
 module.exports = {
