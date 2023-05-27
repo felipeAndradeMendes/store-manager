@@ -13,11 +13,22 @@ const listById = async (id) => {
     'SELECT * FROM products WHERE id = ?',
     [id],
   );
-  console.log(result);
+  // console.log(result);
   return result;
+};
+
+const createProduct = async (newProduct) => {
+  console.log('NEW PRODUCT:', newProduct);
+  const [{ insertId }] = await connection.execute(
+    'INSERT INTO products (name) VALUES (?)',
+    [newProduct],
+  );
+  console.log(insertId);
+  return insertId;
 };
 
 module.exports = {
   listProducts,
   listById,
+  createProduct,
 };
