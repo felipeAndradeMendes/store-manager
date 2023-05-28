@@ -33,7 +33,37 @@ const listById = async (id) => {
   return result;
 };
 
+const createSale = async (newSale) => {
+  const [sales] = await connection.execute(
+    'INSERT INTO sales (date) VALUES (NOW())',
+    );
+
+    newSale.map(async (sale) => {
+      await connection.execute(
+        `INSERT INTO sales_products (sale_id, product_id, quantity)
+        VALUES (?, ?, ?)`,
+        [sales.insertId, sale.productId, sale.quantity],
+      );
+    });
+
+    const response = await connection.execute(
+      `SELECT  product_id AS productId, quantity AS quantity FROM
+      sales_products 
+    WHERE sale_id = ?;`,
+    [sales.insertId],
+    );
+
+  console.log('RESPONSE', response);
+};
+
+/* Não acabei a função de criar sales. 
+Está adicionando corretamente no BD, mas a response ainda tem que ser tratada.
+No console.log esta voltando somente um objeto, em vez de dois.
+A query chama todos que tem o id igual a da tabela sale, então tem que ver como voltar direito.
+***Ver aula sobre Promisse.all, acho que está aí a explicação */ 
+
 module.exports = {
   listSales,
   listById,
+  createSale,
 };

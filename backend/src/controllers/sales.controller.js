@@ -25,7 +25,19 @@ const listById = async (req, res) => {
   }
 };
 
+const createSale = async (req, res) => {
+  try {
+    const newSale = req.body;
+    const result = await salesService.createSale(newSale);
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error.message);
+  }
+};
+
 module.exports = {
   listSales,
   listById,
+  createSale,
 };

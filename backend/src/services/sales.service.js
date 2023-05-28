@@ -14,7 +14,13 @@ const listById = async (id) => {
   return { type: null, message: result };
 };
 
+const createSale = async (newSale) => {
+  const result = await salesModel.createSale(newSale);
+  return result;
+};
+
 module.exports = {
   listSales,
   listById,
+  createSale,
 };
