@@ -1,12 +1,3 @@
-const product1 = {
-  id: 1,
-  name: 'Martelo de Thor',
-};
-
-const newProduct = {
-  name: 'ProdutoX',
-};
-
 const products = [
   {
     id: 1,
@@ -22,8 +13,12 @@ const products = [
   },
 ];
 
-module.exports = {
-  product1,
-  newProduct,
-  products,
+const product2 = {
+  id: 2,
+  name: 'Traje de encolhimento',
 };
+
+module.exports = [
+  products,
+  product2,
+];

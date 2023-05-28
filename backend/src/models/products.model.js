@@ -18,12 +18,12 @@ const listById = async (id) => {
 };
 
 const createProduct = async (newProduct) => {
-  console.log('NEW PRODUCT:', newProduct);
+  // console.log('NEW PRODUCT:', newProduct);
   const [{ insertId }] = await connection.execute(
     'INSERT INTO products (name) VALUES (?)',
     [newProduct.name],
   );
-  console.log(insertId);
+  // console.log(insertId);
   return insertId;
 };
 
