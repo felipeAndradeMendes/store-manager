@@ -1,4 +1,4 @@
-const { salesModel } = require('../models');
+const { salesModel, productsModel } = require('../models');
 
 const listSales = async () => {
   const result = await salesModel.listSales();
@@ -15,8 +15,23 @@ const listById = async (id) => {
 };
 
 const createSale = async (newSale) => {
-  const result = await salesModel.createSale(newSale);
-  return result;
+  let idValidated = true;
+  const salesMap = newSale.map(async (sale) => {
+    const id = await productsModel.listById(sale.productId);
+    console.log('PRODUCT ID:', id);
+    if (!id) {
+      idValidated = false;
+      // return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
+    }
+  });
+  await Promise.all(salesMap);
+  if (idValidated) {
+    const result = await salesModel.createSale(newSale);
+    return result;
+  } 
+    return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
+  
+  // return result;
 };
 
 module.exports = {

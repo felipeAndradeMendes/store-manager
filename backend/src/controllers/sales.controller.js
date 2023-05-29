@@ -29,6 +29,10 @@ const createSale = async (req, res) => {
   try {
     const newSale = req.body;
     const result = await salesService.createSale(newSale);
+
+    if (result.type) {
+      return res.status(404).json({ message: result.message });
+    }
     res.status(201).json(result);
   } catch (error) {
     console.log(error);
