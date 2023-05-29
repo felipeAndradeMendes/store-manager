@@ -20,6 +20,11 @@ describe('Testes de unidade do Model de Sales', function () {
     expect(result).to.deep.equal(saleId2);
   });
 
+  it('É possível cadastrar vendas com sucesso', async function () {
+    sinon.stub(connection, 'execute').resolves();
+    // estudar como fazer o stub de duas connection numa mesma função;
+  });
+
   afterEach(function () {
     sinon.restore();
   });

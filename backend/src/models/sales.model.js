@@ -40,7 +40,7 @@ const getCreatedSales = async (salesId) => {
     WHERE sale_id = ?;`,
     [salesId],
   );
-  console.log('RESPONSE:', response);
+  // console.log('RESPONSE:', response);
   return response;
 };
 
@@ -48,7 +48,7 @@ const createSale = async (newSale) => {
   const [sales] = await connection.execute(
     'INSERT INTO sales (date) VALUES (NOW())',
     );
-  console.log('SALES:', sales.insertId);
+  // console.log('SALES:', sales.insertId);
 
   const newSalesPromisse = newSale.map(async (sale) => {
     await connection.execute(

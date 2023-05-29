@@ -1,4 +1,4 @@
-const { productSchema } = require('./joi.schema');
+const { productSchema, salesSchema } = require('./joi.schema');
 
 const productValidation = async (req, res, next) => {
   const newProduct = req.body;
@@ -14,6 +14,24 @@ const productValidation = async (req, res, next) => {
   next();
 };
 
+const salesValidation = async (req, res, next) => {
+  const newSales = req.body;
+
+  newSales.forEach((sale) => {
+    const { error } = salesSchema.validate(sale);
+  
+    if (error && error.message.includes('required')) {
+      console.log('ERROR:', error);
+      return res.status(400).json({ message: error.message });
+    }
+
+    // if (error && error.message === )
+    // parei no começo da implementação do segundo validate;
+});
+  next();
+};
+
 module.exports = {
   productValidation,
+  salesValidation,
 };
