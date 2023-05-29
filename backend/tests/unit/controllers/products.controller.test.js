@@ -9,7 +9,7 @@ const { productsController } = require('../../../src/controllers');
 const { productsService } = require('../../../src/services');
 const { products, product2 } = require('./mocks/products.controller.mocks');
 
-describe('Testes de unidade da camada Controller de Products', function () {
+describe('Testes de unidade do Controller de Products', function () {
   it('Recupera lista de produtos com sucesso', async function () {
     const res = {};
     const req = {};

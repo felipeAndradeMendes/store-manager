@@ -1,12 +1,31 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 
-const { salesModel } = require('../../../src/models');
-const { saleId2 } = require('./mocks/sales.service.mock');
+const { salesModel, productsModel } = require('../../../src/models');
+const { saleId2, 
+  salesList, 
+  returnFromSales, 
+  newSale, 
+  returnedIdFromCreateSales, 
+} = require('./mocks/sales.service.mock');
 const { salesService } = require('../../../src/services');
 
-describe('Testes de unidade do Service Products', function () {
-  it('Lista com sucesso produto por ID', async function () {
+describe('Testes de unidade do Service Sales', function () {
+  it('Lista com sucesso todas as vendas', async function () {
+    sinon.stub(salesModel, 'listSales').resolves(salesList);
+    const result = await salesModel.listSales();
+
+    expect(result).to.be.deep.equal(salesList);
+  });
+
+  it('Nao lista vendas caso parametro esteja incorreto', async function () {
+    sinon.stub(salesModel, 'listSales').resolves(salesList);
+    const result = await salesModel.listSales();
+
+    expect(result).to.be.deep.equal(salesList);
+  });
+
+  it('Lista com sucesso vendas por ID', async function () {
     sinon.stub(salesModel, 'listById').resolves(saleId2);
     const result = await salesService.listById(2);
 
@@ -14,12 +33,32 @@ describe('Testes de unidade do Service Products', function () {
     expect(result.message).to.be.deep.equal(saleId2);
   });
 
-  it('Não permite listar um produto que não existe', async function () {
+  it('Não permite listar uma venda que não existe', async function () {
     sinon.stub(salesModel, 'listById').resolves([]);
     const result = await salesService.listById(99999);
 
     expect(result.type).to.be.equal('SALES_NOT_FOUD');
     expect(result.message).to.be.deep.equal('Sale not found');
+  });
+
+  it('É possivel cadastrar vendas com sucesso', async function () {
+    sinon.stub(salesModel, 'createSale').resolves(returnFromSales);
+    sinon.stub(productsModel, 'listById').resolves(returnedIdFromCreateSales);
+    const result = await salesService.createSale(newSale);
+
+    // expect(result.type).to.be.equal(undefined);
+    // expect(result.json).to.be.equal(returnFromSales);
+    expect(result).to.be.deep.equal(returnFromSales);
+  });
+
+  it('Não é possivel cadastrar vendas de um produto que não existe', async function () {
+    // sinon.stub(salesModel, 'createSale').resolves(returnFromSales);
+    sinon.stub(productsModel, 'listById').resolves(undefined);
+    const result = await salesService.createSale(newSale);
+
+    expect(result.type).to.be.equal('PRODUCT_NOT_FOUND');
+    expect(result.message).to.be.equal('Product not found');
+    // expect(result).to.be.deep.equal(returnFromSales);
   });
   
   afterEach(function () {

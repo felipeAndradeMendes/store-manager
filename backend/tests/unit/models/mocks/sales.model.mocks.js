@@ -27,7 +27,36 @@ const saleId2 = [
   },
 ];
 
+const insertSalesReturn = {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 4,
+  info: '',
+  serverStatus: 2,
+  warningStatus: 0,
+};
+
+const newSale = [
+  {
+    productId: 2,
+    quantity: 1,
+  },
+];
+
+const returnFromCreateSale = {
+  id: 4,
+  itemsSold: [
+    {
+      productId: 2,
+      quantity: 1,
+    },
+  ],
+};
+
 module.exports = {
   allSales,
   saleId2,
+  insertSalesReturn,
+  newSale,
+  returnFromCreateSale,
 };
