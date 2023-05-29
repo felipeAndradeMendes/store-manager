@@ -33,27 +33,37 @@ const listById = async (id) => {
   return result;
 };
 
+const getCreatedSales = async (salesId) => {
+  const [response] = await connection.execute(
+    `SELECT  product_id AS productId, quantity AS quantity FROM
+    sales_products 
+    WHERE sale_id = ?;`,
+    [salesId],
+  );
+  console.log('RESPONSE:', response);
+  return response;
+};
+
 const createSale = async (newSale) => {
   const [sales] = await connection.execute(
     'INSERT INTO sales (date) VALUES (NOW())',
     );
+  console.log('SALES:', sales.insertId);
 
-    newSale.map(async (sale) => {
-      await connection.execute(
-        `INSERT INTO sales_products (sale_id, product_id, quantity)
-        VALUES (?, ?, ?)`,
-        [sales.insertId, sale.productId, sale.quantity],
-      );
-    });
+  const newSalesPromisse = newSale.map(async (sale) => {
+    await connection.execute(
+      `INSERT INTO sales_products (sale_id, product_id, quantity)
+      VALUES (?, ?, ?)`,
+      [sales.insertId, sale.productId, sale.quantity],
+    ); 
+  });
+  await Promise.all(newSalesPromisse);
+  const response = await getCreatedSales(sales.insertId);
 
-    const response = await connection.execute(
-      `SELECT  product_id AS productId, quantity AS quantity FROM
-      sales_products 
-    WHERE sale_id = ?;`,
-    [sales.insertId],
-    );
-
-  console.log('RESPONSE', response);
+  return {
+    id: sales.insertId,
+    itemsSold: response,
+  };
 };
 
 /* Não acabei a função de criar sales. 
