@@ -30,6 +30,11 @@ const updateProduct = async (id, name) => {
 };
 
 const deleteProduct = async (id) => {
+  const verifyId = await productsModel.listById(id);
+
+  if (!verifyId) {
+    return { type: 'PRODUCT_NOT_FOUND', message: { message: 'Product not found' } };
+  }
   const result = await productsModel.deleteProduct(id);
   return result;
 };
