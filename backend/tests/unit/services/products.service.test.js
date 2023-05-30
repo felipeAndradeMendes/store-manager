@@ -35,6 +35,14 @@ describe('Testes de unidade do Service Products', function () {
 
     expect(result).to.be.equal(4);
   });
+
+  it('Não é possivel atualizar produto que não exista', async function () {
+    sinon.stub(productsModel, 'listById').resolves(undefined);
+    const result = await productsService.updateProduct({ id: 999, name: 'Capa do Bátma' });
+
+    expect(result.type).to.be.deep.equal('PRODUCT_NOT_FOUND');
+    expect(result.message).to.be.deep.equal({ message: 'Product not found' });
+  });
   
   afterEach(function () {
     sinon.restore();

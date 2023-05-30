@@ -33,16 +33,16 @@ const listById = async (id) => {
   return result;
 };
 
-const getCreatedSales = async (salesId) => {
-  const [response] = await connection.execute(
-    `SELECT  product_id AS productId, quantity AS quantity FROM
-    sales_products 
-    WHERE sale_id = ?;`,
-    [salesId],
-  );
-  // console.log('RESPONSE:', response);
-  return response;
-};
+// const getCreatedSales = async (salesId) => {
+//   const [response] = await connection.execute(
+//     `SELECT  product_id AS productId, quantity AS quantity FROM
+//     sales_products 
+//     WHERE sale_id = ?;`,
+//     [salesId],
+//   );
+//   // console.log('RESPONSE:', response);
+//   return response;
+// };
 
 const createSale = async (newSale) => {
   const [sales] = await connection.execute(
@@ -59,11 +59,11 @@ const createSale = async (newSale) => {
   });
 
   await Promise.all(newSalesPromisse);
-  const response = await getCreatedSales(sales.insertId);
+  // const response = await getCreatedSales(sales.insertId);
 
   return {
     id: sales.insertId,
-    itemsSold: response,
+    itemsSold: newSale,
   };
 };
 

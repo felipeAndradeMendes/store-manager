@@ -32,7 +32,7 @@ const updateProduct = async (id, name) => {
     'UPDATE products SET name = ? WHERE id = ?',
     [name, id],
   );
-  console.log('UPDATE RESULT:', affectedRows);
+  // console.log('UPDATE RESULT:', affectedRows);
   return affectedRows;
   // return { id: Number(id), name };
 };

@@ -27,8 +27,11 @@ describe('Testes de unidade do Model de Products', function () {
     expect(result).to.be.equal(4);
   });
 
-  it('É possivel atualizar um rpduto com sucesso', async function () {
-    sinon.stub(connection, 'execute').resolves();
+  it('É possivel atualizar um produto com sucesso', async function () {
+    sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
+    const result = await productsModel.updateProduct({ id: 1, name: 'Capa do Bátima' });
+
+    expect(result).to.be.equal(1);
   });
 
   afterEach(function () {

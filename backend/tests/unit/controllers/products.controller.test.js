@@ -62,6 +62,29 @@ describe('Testes de unidade do Controller de Products', function () {
     expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
   });
 
+  it('Não é possivel atualizar um produto que não existe', async function () {
+    const req = {
+      params: { id: 999 },
+      body: { name: 'Capa do Bátma' },
+    };
+    // const { id } = req.params;
+    // const { name } = req.body;
+    const res = {};
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    sinon
+      .stub(productsService, 'updateProduct')
+      .resolves({ 
+        type: 'PRODUCT_NOT_FOUND', message: { message: 'Product not found' },
+      });
+
+    await productsController.updateProduct(req, res);
+
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
+  });
+
   afterEach(function () {
     sinon.restore();
   });
