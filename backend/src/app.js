@@ -14,4 +14,4 @@ app.use('/sales', salesRouter);
 
 module.exports = app;
 
-// IMPLEMENTAR TESTES DE VALIDAÇÃO ANTES DE CONTINUAR 
+// parei antes de iniciar a implementação do requisito 09 - bonus
