@@ -67,6 +67,13 @@ const createSale = async (newSale) => {
   };
 };
 
+// REQ 09 INCOMPLETO
+// const deleteSale = async (id) => {
+//   const result = connection.execute(
+//     'DELETE FROM '
+//   );
+// };
+
 module.exports = {
   listSales,
   listById,

@@ -7,5 +7,6 @@ const router = express.Router();
 router.get('/', salesController.listSales);
 router.get('/:id', salesController.listById);
 router.post('/', salesValidation, salesController.createSale);
+// router.delete('/:id', salesController); // REQ 09 INCOMPLETO
 
 module.exports = router;

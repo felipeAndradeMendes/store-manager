@@ -40,8 +40,22 @@ const createSale = async (req, res) => {
   }
 };
 
+// REQ 09 INCOMPLETO
+// const deleteSale = async (req, res) => {
+// try {
+//   const { id } = req.params;
+//   const result = await salesService.deleteSale(id);
+
+//   res.status(204).json(result);
+// } catch (error) {
+//   console.log(error);
+//   res.status(500).json(error.message);
+// }
+// };
+
 module.exports = {
   listSales,
   listById,
   createSale,
+  // deleteSale,
 };

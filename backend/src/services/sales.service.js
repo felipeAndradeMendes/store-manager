@@ -32,8 +32,15 @@ const createSale = async (newSale) => {
     return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
 };
 
+// REQ 09 INCOMPLETO
+// const deleteSale = async (id) => {
+//   const result = await salesModel.deleteSale(id);
+//   return result;
+// };
+
 module.exports = {
   listSales,
   listById,
   createSale,
+  // deleteSale,
 };
