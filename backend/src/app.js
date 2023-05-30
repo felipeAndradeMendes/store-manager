@@ -13,3 +13,5 @@ app.use('/products', productRouter);
 app.use('/sales', salesRouter);
 
 module.exports = app;
+
+// IMPLEMENTAR TESTES DE VALIDAÇÃO ANTES DE CONTINUAR 
