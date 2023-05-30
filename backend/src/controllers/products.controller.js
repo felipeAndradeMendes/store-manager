@@ -46,7 +46,7 @@ const updateProduct = async (req, res) => {
     if (result.type) {
       return res.status(404).json(result.message);
     }
-    res.status(200).json(result);
+    res.status(200).json({ id: Number(id), name });
   } catch (error) {
     console.log(error);
       res.status(500).json(error.message);

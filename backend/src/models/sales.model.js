@@ -49,8 +49,8 @@ const createSale = async (newSale) => {
     'INSERT INTO sales (date) VALUES (NOW())',
     );
   // console.log('SALES:', sales);
-  const newSalesPromisse = newSale.map(async (sale) => {
-    const result = await connection.execute(
+  const newSalesPromisse = newSale.map((sale) => {
+    const result = connection.execute(
       `INSERT INTO sales_products (sale_id, product_id, quantity)
       VALUES (?, ?, ?)`,
       [sales.insertId, sale.productId, sale.quantity],

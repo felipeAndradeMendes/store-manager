@@ -27,6 +27,10 @@ describe('Testes de unidade do Model de Products', function () {
     expect(result).to.be.equal(4);
   });
 
+  it('É possivel atualizar um rpduto com sucesso', async function () {
+    sinon.stub(connection, 'execute').resolves();
+  });
+
   afterEach(function () {
     sinon.restore();
   });

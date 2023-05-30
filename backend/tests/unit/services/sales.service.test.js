@@ -18,13 +18,13 @@ describe('Testes de unidade do Service Sales', function () {
     expect(result).to.be.deep.equal(salesList);
   });
 
-  // it('Nao lista vendas caso parametro esteja incorreto', async function () {
-  //   sinon.stub(salesModel, 'listSales').resolves(undefined);
-  //   // sinon.stub(salesModel, 'result').get(() => undefined);
-  //   const result = await salesModel.listSales();
+  it('Nao lista vendas caso parametro esteja incorreto', async function () {
+    sinon.stub(salesModel, 'listSales').resolves(undefined);
+    // sinon.stub(salesModel, 'result').get(() => undefined);
+    const result = await salesModel.listSales();
 
-  //   expect(result).to.be.deep.equal(undefined);
-  // });
+    expect(result).to.be.deep.equal(undefined);
+  });
 
   it('Lista com sucesso vendas por ID', async function () {
     sinon.stub(salesModel, 'listById').resolves(saleId2);

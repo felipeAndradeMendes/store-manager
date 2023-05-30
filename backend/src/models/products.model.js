@@ -33,7 +33,8 @@ const updateProduct = async (id, name) => {
     [name, id],
   );
   console.log('UPDATE RESULT:', affectedRows);
-  return { id: Number(id), name };
+  return affectedRows;
+  // return { id: Number(id), name };
 };
 
 module.exports = {
