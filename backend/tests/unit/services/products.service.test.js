@@ -43,6 +43,24 @@ describe('Testes de unidade do Service Products', function () {
     expect(result.type).to.be.deep.equal('PRODUCT_NOT_FOUND');
     expect(result.message).to.be.deep.equal({ message: 'Product not found' });
   });
+
+  it('É possivel deletar um produto com sucesso', async function () {
+    sinon.stub(productsModel, 'listById').resolves(true);
+    sinon.stub(productsModel, 'deleteProduct').resolves(1);
+
+    const result = await productsService.deleteProduct(1);
+
+    expect(result).to.be.equal(1);
+  });
+
+  it('Não é possível deletar um produto que não existe', async function () {
+    sinon.stub(productsModel, 'listById').resolves(undefined);
+
+    const result = await productsService.deleteProduct(1);
+
+    expect(result.type).to.be.equal('PRODUCT_NOT_FOUND');
+    expect(result.message).to.be.deep.equal({ message: 'Product not found' });
+  });
   
   afterEach(function () {
     sinon.restore();

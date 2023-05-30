@@ -62,7 +62,7 @@ const deleteProduct = async (req, res) => {
       return res.status(404).json(result.message);
     }
 
-    res.status(204).json(result);
+    res.status(204).end();
   } catch (error) {
     console.log(error);
     res.status(500).json(error.message);
