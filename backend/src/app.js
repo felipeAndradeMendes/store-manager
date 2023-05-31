@@ -14,4 +14,4 @@ app.use('/sales', salesRouter);
 
 module.exports = app;
 
-// parei antes de iniciar a implementação do requisito 09 - bonus
+// Parei implementado req 10. Acho que é necessário preparar para acesso externo, com o arquivo .env.

@@ -1,4 +1,4 @@
-const { productSchema, salesSchema } = require('./joi.schema');
+const { productSchema, salesSchema, productQuantitySchema } = require('./joi.schema');
 
 const productValidation = async (req, res, next) => {
   const newProduct = req.body;
@@ -12,6 +12,22 @@ const productValidation = async (req, res, next) => {
   }
   // console.log('RESULT:', error);
   next();
+};
+
+const productQuantityValidation = async (req, res, next) => {
+  const quantity = req.body;
+  const { error } = await productQuantitySchema.validate(quantity);
+
+  if (error && error.message.includes('required')) {
+      // console.log('ERROR:', error);
+      return res.status(400).json({ message: error.message });
+    }
+
+    if (error && error.message.includes('greater')) {
+      return res.status(422).json({ message: '"quantity" must be greater than or equal to 1' });
+    }
+
+    next();
 };
 
 const salesValidation = async (req, res, next) => {
@@ -41,4 +57,5 @@ const salesValidation = async (req, res, next) => {
 module.exports = {
   productValidation,
   salesValidation,
+  productQuantityValidation,
 };

@@ -41,19 +41,37 @@ const createSale = async (req, res) => {
 };
 
 const deleteSale = async (req, res) => {
-try {
-  const { id } = req.params;
-  const result = await salesService.deleteSale(id);
+  try {
+    const { id } = req.params;
+    const result = await salesService.deleteSale(id);
 
-  if (result.type) {
-    return res.status(404).json(result.message);
+    if (result.type) {
+      return res.status(404).json(result.message);
+    }
+
+    res.status(204).end();
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error.message);
   }
+};
 
-  res.status(204).end();
-} catch (error) {
-  console.log(error);
-  res.status(500).json(error.message);
-}
+const updateQuantity = async (req, res) => {
+  try {
+    const { saleId, productId } = req.params;
+    const { quantity } = req.body;
+    
+    const result = await salesService.updateQuantity(saleId, productId, quantity);
+
+    if (result.type) {
+      return res.status(400).json(result.message);
+    }
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error.message);
+  }
 };
 
 module.exports = {
@@ -61,4 +79,5 @@ module.exports = {
   listById,
   createSale,
   deleteSale,
+  updateQuantity,
 };
