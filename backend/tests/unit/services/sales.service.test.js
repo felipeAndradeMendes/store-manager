@@ -7,6 +7,7 @@ const { saleId2,
   returnFromSales, 
   newSale, 
   returnedIdFromCreateSales, 
+  returnFromValidateId,
 } = require('./mocks/sales.service.mock');
 const { salesService } = require('../../../src/services');
 
@@ -60,6 +61,22 @@ describe('Testes de unidade do Service Sales', function () {
     expect(result.type).to.be.equal('PRODUCT_NOT_FOUND');
     expect(result.message).to.be.equal('Product not found');
     // expect(result).to.be.deep.equal(returnFromSales);
+  });
+
+  it('É possivel deletar vendas com sucesso', async function () {
+    sinon.stub(salesModel, 'listById').resolves(returnFromValidateId);
+    sinon.stub(salesModel, 'deleteSale').resolves(1);
+    const result = await salesService.deleteSale(1);
+
+    expect(result).to.be.equal(1);
+  });
+
+  it('Não é possivel deletar uma venda que não existe', async function () {
+    sinon.stub(salesModel, 'listById').resolves([]);
+    const result = await salesService.deleteSale(999);
+
+    expect(result.type).to.be.equal('SALE_NOT_FOUND');
+    expect(result.message).to.be.deep.equal({ message: 'Sale not found' });
   });
   
   afterEach(function () {

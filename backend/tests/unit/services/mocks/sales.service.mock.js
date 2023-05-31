@@ -48,10 +48,19 @@ const returnedIdFromCreateSales = {
   id: 1, name: 'Martelo de Thor', 
 };
 
+const returnFromValidateId = [
+  {
+    date: '2023-05-31T18:49:53.000Z',
+    productId: 3,
+    quantity: 15,
+  },
+];
+
 module.exports = {
   saleId2,
   salesList,
   returnFromSales,
   newSale,
   returnedIdFromCreateSales,
+  returnFromValidateId,
 };

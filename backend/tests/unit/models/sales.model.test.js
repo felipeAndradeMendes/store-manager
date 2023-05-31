@@ -38,7 +38,13 @@ describe('Testes de unidade do Model de Sales', function () {
     const result = await salesModel.createSale(newSale);
 
     expect(result).to.be.deep.equal(returnFromCreateSale);
-    // estudar como fazer o stub de duas connection numa mesma função;
+  });
+
+  it('É possivel deletear uma venda com sucesso', async function () {
+    sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
+    const result = await salesModel.deleteSale(2);
+
+    expect(result).to.be.equal(1);
   });
 
   afterEach(function () {

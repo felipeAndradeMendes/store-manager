@@ -40,22 +40,25 @@ const createSale = async (req, res) => {
   }
 };
 
-// REQ 09 INCOMPLETO
-// const deleteSale = async (req, res) => {
-// try {
-//   const { id } = req.params;
-//   const result = await salesService.deleteSale(id);
+const deleteSale = async (req, res) => {
+try {
+  const { id } = req.params;
+  const result = await salesService.deleteSale(id);
 
-//   res.status(204).json(result);
-// } catch (error) {
-//   console.log(error);
-//   res.status(500).json(error.message);
-// }
-// };
+  if (result.type) {
+    return res.status(404).json(result.message);
+  }
+
+  res.status(204).end();
+} catch (error) {
+  console.log(error);
+  res.status(500).json(error.message);
+}
+};
 
 module.exports = {
   listSales,
   listById,
   createSale,
-  // deleteSale,
+  deleteSale,
 };

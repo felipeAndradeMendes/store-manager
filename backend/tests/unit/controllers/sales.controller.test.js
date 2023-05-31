@@ -59,6 +59,48 @@ describe('Testes de unidade do Controller de Sales', function () {
     expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });
   });
 
+  it('Deleta uma venda com sucesso', async function () {
+    const res = {};
+    const req = {
+      params: { id: 1 },
+    };
+
+    res.status = sinon.stub().returns(res);
+    res.end = sinon.stub().returns();
+    sinon
+      .stub(salesService, 'deleteSale')
+      .resolves(true);
+
+    await salesController.deleteSale(req, res);
+
+    expect(res.status).to.have.been.calledWith(204);
+    expect(res.end).to.have.been.calledWith();
+  });
+
+  it('Não é possivel deletar uma venda que não existe', async function () {
+    const res = {};
+    const req = {
+      params: {
+        id: 999,
+      },
+    };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    res.end = sinon.stub().returns();
+    sinon
+      .stub(salesService, 'deleteSale')
+      .resolves({ 
+          type: 'SALE_NOT_FOUND', message: { message: 'Sale not found' }, 
+        });
+
+    await salesController.deleteSale(req, res);
+
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });
+    expect(res.end).to.have.been.not.calledWith();
+  });
+
   afterEach(function () {
     sinon.restore();
   });

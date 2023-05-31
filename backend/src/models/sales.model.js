@@ -67,15 +67,18 @@ const createSale = async (newSale) => {
   };
 };
 
-// REQ 09 INCOMPLETO
-// const deleteSale = async (id) => {
-//   const result = connection.execute(
-//     'DELETE FROM '
-//   );
-// };
+const deleteSale = async (id) => {
+  const [{ affectedRows }] = await connection.execute(
+    'DELETE FROM sales WHERE id = ?',
+    [id],
+  );
+  // console.log(affectedRows);
+  return affectedRows;
+};
 
 module.exports = {
   listSales,
   listById,
   createSale,
+  deleteSale,
 };
