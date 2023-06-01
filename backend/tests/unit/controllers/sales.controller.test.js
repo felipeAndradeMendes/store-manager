@@ -130,57 +130,57 @@ describe('Testes de unidade do Controller de Sales', function () {
     expect(res.json).to.have.been.called.calledWith(returnUpdatedQuantityObj);
   });
 
-  // it('Não é possivel atualizar a quantidade uma venda que não exista', async function () {
-  //   const res = {};
-  //   const req = {
-  //     params: { 
-  //       saleId: 999,
-  //       productId: 2,
-  //     },
-  //     body: {
-  //       quantity: 50,
-  //     },   
-  //   };
-  //   res.status = sinon.stub().returns(res);
-  //   res.json = sinon.stub().returns();
-  //   sinon
-  //     .stub(salesService, 'updateQuantity')
-  //     .resolves({ 
-  //       type: 'SALE_NOT_FOUND', 
-  //       message: { message: SALE_NOT_FOUND_ERROR_MSG },
-  //     });
+  it('Não é possivel atualizar a quantidade uma venda que não exista', async function () {
+    const res = {};
+    const req = {
+      params: { 
+        saleId: 999,
+        productId: 2,
+      },
+      body: {
+        quantity: 50,
+      },   
+    };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon
+      .stub(salesService, 'updateQuantity')
+      .resolves({ 
+        type: 'SALE_NOT_FOUND', 
+        message: { message: SALE_NOT_FOUND_ERROR_MSG },
+      });
 
-  //   await salesController.updateQuantity(req, res);
+    await salesController.updateQuantity(req, res);
 
-  //   expect(res.status).to.have.been.called.calledWith(400);
-  //   expect(res.json).to.have.been.called.calledWith({ message: SALE_NOT_FOUND_ERROR_MSG });
-  // });
+    expect(res.status).to.have.been.called.calledWith(404);
+    expect(res.json).to.have.been.called.calledWith({ message: SALE_NOT_FOUND_ERROR_MSG });
+  });
 
-  // it('Não é possivel atualizar a quantidade de um produto que não exista', async function () {
-  //   const res = {};
-  //   const req = {
-  //     params: { 
-  //       saleId: 1,
-  //       productId: 999,
-  //     },
-  //     body: {
-  //       quantity: 50,
-  //     },   
-  //   };
-  //   res.status = sinon.stub().returns(res);
-  //   res.json = sinon.stub().returns();
-  //   sinon
-  //     .stub(salesService, 'updateQuantity')
-  //     .resolves({ 
-  //       type: 'PRODUCT_NOT_FOUND_IN_SALE', 
-  //       message: 'Product not found in sale',
-  //     });
+  it('Não é possivel atualizar a quantidade de um produto que não exista', async function () {
+    const res = {};
+    const req = {
+      params: { 
+        saleId: 1,
+        productId: 999,
+      },
+      body: {
+        quantity: 50,
+      },   
+    };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon
+      .stub(salesService, 'updateQuantity')
+      .resolves({ 
+        type: 'PRODUCT_NOT_FOUND_IN_SALE', 
+        message: 'Product not found in sale',
+      });
 
-  //   await salesController.updateQuantity(req, res);
+    await salesController.updateQuantity(req, res);
 
-  //   expect(res.status).to.have.been.called.calledWith(400);
-  //   expect(res.json).to.have.been.called.calledWith('Product not found in sale');
-  // });
+    expect(res.status).to.have.been.called.calledWith(404);
+    expect(res.json).to.have.been.called.calledWith('Product not found in sale');
+  });
 
   // ESTUDAR COMO TESTAR AS LINHAS DE 'CATCH' DO TRY/CATCH
   // it.only('testa quando função da erro', async function () {

@@ -8,8 +8,8 @@ const { saleId2,
   newSale, 
   returnedIdFromCreateSales, 
   returnFromValidateId,
-  // updatedQuantityDate,
-  // returnUpdatedQuantityObj,
+  updatedQuantityDate,
+  returnUpdatedQuantityObj,
 } = require('./mocks/sales.service.mock');
 const { salesService } = require('../../../src/services');
 
@@ -81,33 +81,33 @@ describe('Testes de unidade do Service Sales', function () {
     expect(result.message).to.be.deep.equal({ message: 'Sale not found' });
   });
 
-  // it('É possivel atualizar a quantidade de um produto com sucesso', async function () {
-  //   sinon.stub(salesModel, 'listById').resolves(true);
-  //   sinon.stub(productsModel, 'listById').resolves(true);
-  //   sinon.stub(salesModel, 'updateQuantity').resolves(updatedQuantityDate);
+  it('É possivel atualizar a quantidade de um produto com sucesso', async function () {
+    sinon.stub(salesModel, 'listById').resolves(true);
+    sinon.stub(productsModel, 'listByIdInSales').resolves(true);
+    sinon.stub(salesModel, 'updateQuantity').resolves(updatedQuantityDate);
     
-  //   const result = await salesService.updateQuantity(2, 3, 50);
+    const result = await salesService.updateQuantity(2, 3, 50);
 
-  //   expect(result).to.be.deep.equal(returnUpdatedQuantityObj);
-  // });
+    expect(result).to.be.deep.equal(returnUpdatedQuantityObj);
+  });
 
-  // it('Não é possivel atualizar a quantidade uma venda que não exista', async function () {
-  //   sinon.stub(salesModel, 'listById').resolves([]);
-  //   sinon.stub(productsModel, 'listById').resolves(true);
-  //   const result = await salesService.updateQuantity(999, 3, 50);
+  it('Não é possivel atualizar a quantidade uma venda que não exista', async function () {
+    sinon.stub(salesModel, 'listById').resolves([]);
+    sinon.stub(productsModel, 'listByIdInSales').resolves(true);
+    const result = await salesService.updateQuantity(999, 3, 50);
 
-  //   expect(result.type).to.be.equal('SALE_NOT_FOUND');
-  //   expect(result.message).to.be.deep.equal({ message: 'Sale not found' });
-  // });
+    expect(result.type).to.be.equal('SALE_NOT_FOUND');
+    expect(result.message).to.be.deep.equal({ message: 'Sale not found' });
+  });
 
-  // it('Não é possivel atualizar a quantidade de um produto que não exista', async function () {
-  //   sinon.stub(salesModel, 'listById').resolves(true);
-  //   sinon.stub(productsModel, 'listById').resolves(false);
-  //   const result = await salesService.updateQuantity(1, 999, 50);
+  it('Não é possivel atualizar a quantidade de um produto que não exista', async function () {
+    sinon.stub(salesModel, 'listById').resolves(true);
+    sinon.stub(productsModel, 'listByIdInSales').resolves(false);
+    const result = await salesService.updateQuantity(1, 999, 50);
 
-  //   expect(result.type).to.be.equal('PRODUCT_NOT_FOUND_IN_SALE');
-  //   expect(result.message).to.be.equal('Product not found in sale');
-  // });
+    expect(result.type).to.be.equal('PRODUCT_NOT_FOUND_IN_SALE');
+    expect(result.message).to.be.deep.equal({ message: 'Product not found in sale' });
+  });
   
   afterEach(function () {
     sinon.restore();
