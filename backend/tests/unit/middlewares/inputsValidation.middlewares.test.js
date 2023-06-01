@@ -5,7 +5,12 @@ const sinonChai = require('sinon-chai');
 const { expect } = chai;
 chai.use(sinonChai);
 
-const { productValidation, salesValidation } = require('../../../src/middlewares/inputsValidation');
+const { 
+  productValidation, 
+  salesValidation, 
+  productQuantityValidation,
+} = require('../../../src/middlewares/inputsValidation');
+
 const { newSales,
    salesWithoutProductId,
    salesWithoutQuantity,
@@ -129,6 +134,68 @@ describe('Testes de unidade do Middleware Inputs Validation', function () {
     expect(res.status).to.have.been.calledWith(422);
     expect(res.json).to.have.been.calledWith(SALES_QUANTITY_ZERO_ERROR_MSG);
     expect(next).to.have.been.not.calledWith();
+  });
+
+  it('Sales UPDATE - não passa na validação sem campo "quantity"', async function () {
+    const res = {};
+    const req = {
+      params: { 
+        saleId: 1,
+        productId: 2,
+      },
+      body: {},   
+    };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    const next = sinon.stub().returns();
+
+    await productQuantityValidation(req, res, next);
+
+    expect(res.status).to.have.been.calledWith(400);
+    expect(res.json).to.have.been.calledWith(REQUIRED_SALES_QUANTITY_ERROR_MSG);
+    expect(next).to.have.been.not.calledWith();
+  });
+
+  it('Sales UPDATE - não passa na validação se a quantidade for menor que 1', async function () {
+    const res = {};
+    const req = {
+      params: { 
+        saleId: 1,
+        productId: 2,
+      },
+      body: {
+        quantity: 0,
+      },   
+    };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    const next = sinon.stub().returns();
+
+    await productQuantityValidation(req, res, next);
+
+    expect(res.status).to.have.been.calledWith(422);
+    expect(res.json).to.have.been.calledWith(SALES_QUANTITY_ZERO_ERROR_MSG);
+    expect(next).to.have.been.not.calledWith();
+  });
+
+  it('Sales UPDATE - passa nas validações com sucesso', async function () {
+    const res = {};
+    const req = {
+      params: { 
+        saleId: 1,
+        productId: 2,
+      },
+      body: {
+        quantity: 50,
+      },   
+    };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    const next = sinon.stub().returns();
+
+    await productQuantityValidation(req, res, next);
+
+    expect(next).to.have.been.calledWith();
   });
 
   afterEach(function () {
