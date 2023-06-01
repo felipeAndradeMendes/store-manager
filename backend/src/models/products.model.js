@@ -17,6 +17,14 @@ const listById = async (id) => {
   return result;
 };
 
+const listByIdInSales = async (id) => {
+  const [[result]] = await connection.execute(
+    'SELECT * FROM sales_products WHERE product_id = ?',
+    [id],
+  );
+  return result;
+};
+
 const createProduct = async (newProduct) => {
   // console.log('NEW PRODUCT:', newProduct);
   const [{ insertId }] = await connection.execute(
@@ -52,4 +60,5 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
+  listByIdInSales,
 };
