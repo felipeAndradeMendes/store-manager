@@ -26,7 +26,6 @@ const listByIdInSales = async (id) => {
 };
 
 const createProduct = async (newProduct) => {
-  // console.log('NEW PRODUCT:', newProduct);
   const [{ insertId }] = await connection.execute(
     'INSERT INTO products (name) VALUES (?)',
     [newProduct.name],
@@ -40,7 +39,6 @@ const updateProduct = async (id, name) => {
     'UPDATE products SET name = ? WHERE id = ?',
     [name, id],
   );
-  // console.log('UPDATE RESULT:', affectedRows);
   return affectedRows;
   // return { id: Number(id), name };
 };

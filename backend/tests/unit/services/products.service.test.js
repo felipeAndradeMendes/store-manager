@@ -61,6 +61,34 @@ describe('Testes de unidade do Service Products', function () {
     expect(result.type).to.be.equal('PRODUCT_NOT_FOUND');
     expect(result.message).to.be.deep.equal({ message: 'Product not found' });
   });
+
+  it('É possivel buscar um produto pelo nome', async function () {
+    const query = 'tr';
+    const returnedSearch = [{ id: 2, name: 'Traje de encolhimento' }];
+    sinon.stub(productsModel, 'searchProductByName').resolves(returnedSearch);
+
+    const result = await productsService.searchProduct(query);
+
+    expect(result).to.be.deep.equal(returnedSearch);
+  });
+
+  it('Retorna todos os produtos quando a busca é vazia', async function () {
+    const query = 'tr';
+    sinon.stub(productsModel, 'searchProductByName').resolves(products);
+
+    const result = await productsService.searchProduct(query);
+
+    expect(result).to.be.deep.equal(products);
+  });
+
+  it('retorna um array vazio quando não há produtos correspondentes', async function () {
+    const query = 'za';
+    sinon.stub(productsModel, 'searchProductByName').resolves([]);
+
+    const result = await productsService.searchProduct(query);
+
+    expect(result).to.be.deep.equal([]);
+  });
   
   afterEach(function () {
     sinon.restore();

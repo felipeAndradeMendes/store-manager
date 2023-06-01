@@ -41,6 +41,23 @@ describe('Testes de unidade do Model de Products', function () {
     expect(result).to.be.equal(1);
   });
 
+  it('É possivel buscar um produto pelo nome', async function () {
+    const query = 'tr';
+    const returnedSearch = [{ id: 2, name: 'Traje de encolhimento' }];
+    sinon.stub(connection, 'execute').resolves([returnedSearch]);
+    const result = await productsModel.searchProductByName(query);
+
+    expect(result).to.be.deep.equal(returnedSearch);
+  });
+
+  it('Retorna todos os produtos quando a busca é vazia', async function () {
+    const query = '';
+    sinon.stub(connection, 'execute').resolves([products]);
+    const result = await productsModel.searchProductByName(query);
+
+    expect(result).to.be.deep.equal(products);
+  });
+
   afterEach(function () {
     sinon.restore();
   });

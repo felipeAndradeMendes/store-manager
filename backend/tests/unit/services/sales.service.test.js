@@ -23,7 +23,6 @@ describe('Testes de unidade do Service Sales', function () {
 
   it('Nao lista vendas caso parametro esteja incorreto', async function () {
     sinon.stub(salesModel, 'listSales').resolves(undefined);
-    // sinon.stub(salesModel, 'result').get(() => undefined);
     const result = await salesModel.listSales();
 
     expect(result).to.be.deep.equal(undefined);
@@ -50,19 +49,15 @@ describe('Testes de unidade do Service Sales', function () {
     sinon.stub(productsModel, 'listById').resolves(returnedIdFromCreateSales);
     const result = await salesService.createSale(newSale);
 
-    // expect(result.type).to.be.equal(undefined);
-    // expect(result.json).to.be.equal(returnFromSales);
     expect(result).to.be.deep.equal(returnFromSales);
   });
 
   it('Não é possivel cadastrar vendas de um produto que não existe', async function () {
-    // sinon.stub(salesModel, 'createSale').resolves(returnFromSales);
     sinon.stub(productsModel, 'listById').resolves(undefined);
     const result = await salesService.createSale(newSale);
 
     expect(result.type).to.be.equal('PRODUCT_NOT_FOUND');
     expect(result.message).to.be.equal('Product not found');
-    // expect(result).to.be.deep.equal(returnFromSales);
   });
 
   it('É possivel deletar vendas com sucesso', async function () {

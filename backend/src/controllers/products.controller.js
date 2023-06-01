@@ -73,8 +73,6 @@ const searchProduct = async (req, res) => {
   try {
     const { q } = req.query;
     const result = await productsService.searchProduct(q);
-    // const result = await productsModel.listProducts();
-    // console.log('search result:', result);
 
     return res.status(200).json(result);
   } catch (error) {

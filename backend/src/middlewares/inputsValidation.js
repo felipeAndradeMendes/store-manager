@@ -10,7 +10,6 @@ const productValidation = async (req, res, next) => {
   if (error && error.message === '"name" is required') {
     return res.status(400).json({ message: error.message });
   }
-  // console.log('RESULT:', error);
   next();
 };
 
@@ -19,7 +18,6 @@ const productQuantityValidation = async (req, res, next) => {
   const { error } = await productQuantitySchema.validate(quantity);
 
   if (error && error.message.includes('required')) {
-      // console.log('ERROR:', error);
       return res.status(400).json({ message: error.message });
     }
 
@@ -38,7 +36,6 @@ const salesValidation = async (req, res, next) => {
     const { error } = salesSchema.validate(sale);
   
     if (error && error.message.includes('required')) {
-      // console.log('ERROR:', error);
       tudoOk = false;
       return res.status(400).json({ message: error.message });
     }
@@ -49,7 +46,6 @@ const salesValidation = async (req, res, next) => {
     }
     return true;
   });
-  // console.log('Acabou o map!');
 
   return tudoOk && next();
 };

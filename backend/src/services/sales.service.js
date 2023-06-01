@@ -34,7 +34,6 @@ const createSale = async (newSale) => {
 
 const deleteSale = async (id) => {
   const idValidated = await salesModel.listById(id);
-  // console.log('IDVALIDATED:', idValidated);
 
   if (idValidated.length === 0) {
     return { type: 'SALE_NOT_FOUND', message: { message: 'Sale not found' } };

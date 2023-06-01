@@ -33,22 +33,10 @@ const listById = async (id) => {
   return result;
 };
 
-// const getCreatedSales = async (salesId) => {
-//   const [response] = await connection.execute(
-//     `SELECT  product_id AS productId, quantity AS quantity FROM
-//     sales_products 
-//     WHERE sale_id = ?;`,
-//     [salesId],
-//   );
-//   // console.log('RESPONSE:', response);
-//   return response;
-// };
-
 const createSale = async (newSale) => {
   const [sales] = await connection.execute(
     'INSERT INTO sales (date) VALUES (NOW())',
     );
-  // console.log('SALES:', sales);
   const newSalesPromisse = newSale.map((sale) => {
     const result = connection.execute(
       `INSERT INTO sales_products (sale_id, product_id, quantity)
@@ -59,7 +47,6 @@ const createSale = async (newSale) => {
   });
 
   await Promise.all(newSalesPromisse);
-  // const response = await getCreatedSales(sales.insertId);
 
   return {
     id: sales.insertId,
@@ -75,21 +62,6 @@ const deleteSale = async (id) => {
   // console.log(affectedRows);
   return affectedRows;
 };
-
-// const updateQuantity = async (saleId, productId, quantity) => {
-//   const [{ affectedRows }] = await connection.execute(
-//   'UPDATE sales_products SET quantity = ? WHERE sale_id = ? AND product_id = ?',
-//   [quantity, saleId, productId],
-//   );
-
-//   const [date] = await connection.execute(
-//     'SELECT date FROM sales WHERE id = ?',
-//     [saleId],
-//   );
-//   // console.log('DATE:', date);
-//   console.log('UPDATE QUANTITY RESULT:', affectedRows);
-//   return date;
-// };
 
 const updateQuantity = async (saleId, productId, quantity) => {
   const [{ affectedRows }] = await connection.execute(

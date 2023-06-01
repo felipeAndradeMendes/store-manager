@@ -60,7 +60,7 @@ const updateQuantity = async (req, res) => {
   try {
     const { saleId, productId } = req.params;
     const { quantity } = req.body;
-    console.log('IDs E QUANTITY:', saleId, productId, quantity);
+    // console.log('IDs E QUANTITY:', saleId, productId, quantity);
     
     const result = await salesService.updateQuantity(saleId, productId, quantity);
 

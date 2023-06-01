@@ -11,7 +11,6 @@ router.delete('/:id', salesController.deleteSale);
 router.put(
 '/:saleId/products/:productId/quantity', 
 productQuantityValidation,
-// salesValidation,
 salesController.updateQuantity,
 );
 

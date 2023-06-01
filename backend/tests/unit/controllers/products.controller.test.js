@@ -69,8 +69,7 @@ describe('Testes de unidade do Controller de Products', function () {
       params: { id: 999 },
       body: { name: 'Capa do Bátma' },
     };
-    // const { id } = req.params;
-    // const { name } = req.body;
+
     const res = {};
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
@@ -125,6 +124,54 @@ describe('Testes de unidade do Controller de Products', function () {
 
     expect(res.status).to.have.been.calledWith(404);
     expect(end).to.have.been.not.calledWith();
+  });
+
+  it('É possivel buscar um produto pelo nome', async function () {
+    const res = {};
+    const req = { query: { q: 'tr' } };
+    
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon
+      .stub(productsService, 'searchProduct')
+      .resolves(product2);
+    
+    await productsController.searchProduct(req, res);
+
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(product2);
+  });
+
+  it('Retorna todos os produtos quando a busca é vazia', async function () {
+    const res = {};
+    const req = { query: { q: '' } };
+    
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon
+      .stub(productsService, 'searchProduct')
+      .resolves(products);
+    
+    await productsController.searchProduct(req, res);
+
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(products);
+  });
+
+  it('retorna um array vazio quando não há produtos correspondentes', async function () {
+    const res = {};
+    const req = { query: { q: 'za' } };
+    
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon
+      .stub(productsService, 'searchProduct')
+      .resolves([]);
+    
+    await productsController.searchProduct(req, res);
+
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith([]);
   });
 
   afterEach(function () {
