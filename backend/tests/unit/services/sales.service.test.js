@@ -8,8 +8,8 @@ const { saleId2,
   newSale, 
   returnedIdFromCreateSales, 
   returnFromValidateId,
-  updatedQuantityDate,
-  returnUpdatedQuantityObj,
+  // updatedQuantityDate,
+  // returnUpdatedQuantityObj,
 } = require('./mocks/sales.service.mock');
 const { salesService } = require('../../../src/services');
 
