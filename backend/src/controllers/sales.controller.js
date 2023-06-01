@@ -3,7 +3,7 @@ const { salesService } = require('../services');
 const listSales = async (_req, res) => {
   try {
     const result = await salesService.listSales();
-    res.status(200).json(result);    
+    return res.status(200).json(result);    
   } catch (error) {
     console.log(error);
     res.status(500).json(error.message);
@@ -33,7 +33,7 @@ const createSale = async (req, res) => {
     if (result.type) {
       return res.status(404).json({ message: result.message });
     }
-    res.status(201).json(result);
+    return res.status(201).json(result);
   } catch (error) {
     console.log(error);
     res.status(500).json(error.message);
@@ -49,7 +49,7 @@ const deleteSale = async (req, res) => {
       return res.status(404).json(result.message);
     }
 
-    res.status(204).end();
+    return res.status(204).end();
   } catch (error) {
     console.log(error);
     res.status(500).json(error.message);
@@ -65,10 +65,10 @@ const updateQuantity = async (req, res) => {
     const result = await salesService.updateQuantity(saleId, productId, quantity);
 
     if (result.type) {
-      return res.status(400).json(result.message);
+      return res.status(404).json(result.message);
     }
 
-    res.status(200).json(result);
+    return res.status(200).json(result);
   } catch (error) {
     console.log(error);
     res.status(500).json(error.message);

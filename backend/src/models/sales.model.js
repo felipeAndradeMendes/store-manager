@@ -76,6 +76,21 @@ const deleteSale = async (id) => {
   return affectedRows;
 };
 
+// const updateQuantity = async (saleId, productId, quantity) => {
+//   const [{ affectedRows }] = await connection.execute(
+//   'UPDATE sales_products SET quantity = ? WHERE sale_id = ? AND product_id = ?',
+//   [quantity, saleId, productId],
+//   );
+
+//   const [date] = await connection.execute(
+//     'SELECT date FROM sales WHERE id = ?',
+//     [saleId],
+//   );
+//   // console.log('DATE:', date);
+//   console.log('UPDATE QUANTITY RESULT:', affectedRows);
+//   return date;
+// };
+
 const updateQuantity = async (saleId, productId, quantity) => {
   const [{ affectedRows }] = await connection.execute(
   'UPDATE sales_products SET quantity = ? WHERE sale_id = ? AND product_id = ?',

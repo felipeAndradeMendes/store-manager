@@ -9,7 +9,7 @@ router.get('/:id', salesController.listById);
 router.post('/', salesValidation, salesController.createSale);
 router.delete('/:id', salesController.deleteSale);
 router.put(
-'/:saleId/product/:productId/quantity', 
+'/:saleId/products/:productId/quantity', 
 productQuantityValidation,
 // salesValidation,
 salesController.updateQuantity,

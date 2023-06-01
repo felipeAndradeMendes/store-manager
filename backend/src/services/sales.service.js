@@ -52,7 +52,7 @@ const updateQuantity = async (saleId, productId, quantity) => {
     return { type: 'SALE_NOT_FOUND', message: { message: 'Sale not found' } };
   }
   if (!validateProductId) {
-    return { type: 'PRODUCT_NOT_FOUND_IN_SALE', message: 'Product not found in sale' };
+    return { type: 'PRODUCT_NOT_FOUND_IN_SALE', message: { message: 'Product not found in sale' } };
   }
   const [result] = await salesModel.updateQuantity(saleId, productId, quantity);
   // console.log(result);
