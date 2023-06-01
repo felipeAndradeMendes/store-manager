@@ -54,6 +54,16 @@ const deleteProduct = async (id) => {
   return affectedRows;
 };
 
+const searchProductByName = async (q) => {
+  const [result] = await connection.execute(
+    'SELECT * FROM products WHERE name LIKE ?',
+    [`%${q}%`],
+  );
+
+  console.log('SQL FILTER RESULT:', result);
+  return result;
+};
+
 module.exports = {
   listProducts,
   listById,
@@ -61,4 +71,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   listByIdInSales,
+  searchProductByName,
 };
