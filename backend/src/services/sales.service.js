@@ -57,13 +57,14 @@ const updateQuantity = async (saleId, productId, quantity) => {
   }
 
   const [result] = await salesModel.updateQuantity(saleId, productId, quantity);
+  // console.log(result);
   const { date } = result;
   console.log(date);
   return {
     date,
-    productId,
+    productId: Number(productId),
     quantity,
-    saleId,
+    saleId: Number(saleId),
   };
 };
 

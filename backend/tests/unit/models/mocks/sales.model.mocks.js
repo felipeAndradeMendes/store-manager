@@ -53,10 +53,16 @@ const returnFromCreateSale = {
   ],
 };
 
+const updatedQuantityDate = [
+  { date: '2023-06-01T13:31:54.000Z', 
+},
+];
+
 module.exports = {
   allSales,
   saleId2,
   insertSalesReturn,
   newSale,
   returnFromCreateSale,
+  updatedQuantityDate,
 };

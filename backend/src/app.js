@@ -1,5 +1,6 @@
 const express = require('express');
 const { productRouter, salesRouter } = require('./routers');
+// require('dotenv').config();
 
 const app = express();
 app.use(express.json());

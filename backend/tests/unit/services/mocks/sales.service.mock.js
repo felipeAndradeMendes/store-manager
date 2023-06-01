@@ -56,6 +56,18 @@ const returnFromValidateId = [
   },
 ];
 
+const updatedQuantityDate = [
+  { date: '2023-06-01T13:31:54.000Z', 
+},
+];
+
+const returnUpdatedQuantityObj = {
+  date: '2023-06-01T13:31:54.000Z',
+  productId: 3,
+  quantity: 50,
+  saleId: 2,
+};
+
 module.exports = {
   saleId2,
   salesList,
@@ -63,4 +75,6 @@ module.exports = {
   newSale,
   returnedIdFromCreateSales,
   returnFromValidateId,
+  updatedQuantityDate,
+  returnUpdatedQuantityObj,
 };

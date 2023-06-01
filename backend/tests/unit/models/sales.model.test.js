@@ -9,6 +9,7 @@ const {
   insertSalesReturn, 
   newSale, 
   returnFromCreateSale,
+  updatedQuantityDate,
 } = require('./mocks/sales.model.mocks');
 
 describe('Testes de unidade do Model de Sales', function () {
@@ -45,6 +46,16 @@ describe('Testes de unidade do Model de Sales', function () {
     const result = await salesModel.deleteSale(2);
 
     expect(result).to.be.equal(1);
+  });
+
+  it('É possivel alterar a quantidade de um produto de uma venda com sucesso', async function () {
+    const callback = sinon.stub(connection, 'execute');
+    callback.onCall(0).resolves([{ affectedRows: 1 }]);
+    callback.onCall(1).resolves([updatedQuantityDate]);
+
+    const result = await salesModel.updateQuantity(2, 3, 50);
+
+    expect(result).to.be.equal(updatedQuantityDate);
   });
 
   afterEach(function () {

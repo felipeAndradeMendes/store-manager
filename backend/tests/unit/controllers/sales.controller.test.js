@@ -7,7 +7,13 @@ chai.use(sinonChai);
 
 const { salesController } = require('../../../src/controllers');
 const { salesService } = require('../../../src/services');
-const { returnedSalesList, saleId1 } = require('./mocks/sales.controller.mocks');
+const {
+  returnedSalesList, 
+  saleId1, 
+  returnUpdatedQuantityObj,
+} = require('./mocks/sales.controller.mocks');
+
+const SALE_NOT_FOUND_ERROR_MSG = 'Sale not found';
 
 describe('Testes de unidade do Controller de Sales', function () {
   it('Lista com sucesso todas as vendas', async function () {
@@ -51,12 +57,12 @@ describe('Testes de unidade do Controller de Sales', function () {
     res.json = sinon.stub().returns();
     sinon
       .stub(salesService, 'listById')
-      .resolves({ type: 'SALES_NOT_FOUD', message: 'Sale not found' });
+      .resolves({ type: 'SALES_NOT_FOUD', message: SALE_NOT_FOUND_ERROR_MSG });
 
     await salesController.listById(req, res);
 
     expect(res.status).to.have.been.calledWith(404);
-    expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });
+    expect(res.json).to.have.been.calledWith({ message: SALE_NOT_FOUND_ERROR_MSG });
   });
 
   it('Deleta uma venda com sucesso', async function () {
@@ -91,16 +97,92 @@ describe('Testes de unidade do Controller de Sales', function () {
     sinon
       .stub(salesService, 'deleteSale')
       .resolves({ 
-          type: 'SALE_NOT_FOUND', message: { message: 'Sale not found' }, 
+          type: 'SALE_NOT_FOUND', message: { message: SALE_NOT_FOUND_ERROR_MSG }, 
         });
 
     await salesController.deleteSale(req, res);
 
     expect(res.status).to.have.been.calledWith(404);
-    expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });
+    expect(res.json).to.have.been.calledWith({ message: SALE_NOT_FOUND_ERROR_MSG });
     expect(res.end).to.have.been.not.calledWith();
   });
 
+  it('É possivel atualizar a quantidade de um produto com sucesso', async function () {
+    const res = {};
+    const req = {
+      params: { 
+        saleId: 1,
+        productId: 2,
+      },
+      body: {
+        quantity: 50,
+      },   
+    };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon
+      .stub(salesService, 'updateQuantity')
+      .resolves(returnUpdatedQuantityObj);
+
+    await salesController.updateQuantity(req, res);
+
+    expect(res.status).to.have.been.called.calledWith(200);
+    expect(res.json).to.have.been.called.calledWith(returnUpdatedQuantityObj);
+  });
+
+  it('Não é possivel atualizar a quantidade uma venda que não exista', async function () {
+    const res = {};
+    const req = {
+      params: { 
+        saleId: 999,
+        productId: 2,
+      },
+      body: {
+        quantity: 50,
+      },   
+    };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon
+      .stub(salesService, 'updateQuantity')
+      .resolves({ 
+        type: 'SALE_NOT_FOUND', 
+        message: { message: SALE_NOT_FOUND_ERROR_MSG },
+      });
+
+    await salesController.updateQuantity(req, res);
+
+    expect(res.status).to.have.been.called.calledWith(400);
+    expect(res.json).to.have.been.called.calledWith({ message: SALE_NOT_FOUND_ERROR_MSG });
+  });
+
+  it('Não é possivel atualizar a quantidade de um produto que não exista', async function () {
+    const res = {};
+    const req = {
+      params: { 
+        saleId: 1,
+        productId: 999,
+      },
+      body: {
+        quantity: 50,
+      },   
+    };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon
+      .stub(salesService, 'updateQuantity')
+      .resolves({ 
+        type: 'PRODUCT_NOT_FOUND_IN_SALE', 
+        message: 'Product not found in sale',
+      });
+
+    await salesController.updateQuantity(req, res);
+
+    expect(res.status).to.have.been.called.calledWith(400);
+    expect(res.json).to.have.been.called.calledWith('Product not found in sale');
+  });
+
+  // ESTUDAR COMO TESTAR AS LINHAS DE 'CATCH' DO TRY/CATCH
   // it.only('testa quando função da erro', async function () {
   //   const res = {};
   //   const req = {

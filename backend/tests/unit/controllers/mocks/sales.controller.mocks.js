@@ -34,7 +34,15 @@ const saleId1 = [
   },
 ];
 
+const returnUpdatedQuantityObj = {
+  date: '2023-06-01T13:31:54.000Z',
+  productId: 3,
+  quantity: 50,
+  saleId: 2,
+};
+
 module.exports = {
   returnedSalesList,
   saleId1,
+  returnUpdatedQuantityObj,
 };
